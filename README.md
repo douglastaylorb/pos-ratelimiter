@@ -45,6 +45,8 @@ TOKEN_premium=1000:30
 
 ## Como Testar
 
+Subir o projeto com `docker compose up -d`
+
 #### com Curl
 
 - Teste básico
@@ -59,3 +61,6 @@ for i in {1..15}; do curl http://localhost:8080/ && echo; done
 #### com Postman
 
 Cadastrar os tokens nos headers e fazer as requisições com e sem os tokens ativos:
+
+<img width="1324" height="676" alt="image" src="https://github.com/user-attachments/assets/07946bea-a9cf-454d-a3ad-a58c2696b64a" />
+
