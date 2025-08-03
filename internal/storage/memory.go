@@ -20,7 +20,6 @@ func NewMemoryStorage() *MemoryStorage {
 		expires: make(map[string]time.Time),
 	}
 
-	// Start cleanup goroutine
 	go storage.cleanup()
 
 	return storage
@@ -34,15 +33,12 @@ func (m *MemoryStorage) cleanup() {
 		m.mutex.Lock()
 		now := time.Now()
 
-		// Clean expired data
 		for key, expiry := range m.expires {
 			if now.After(expiry) {
 				delete(m.data, key)
 				delete(m.expires, key)
 			}
 		}
-
-		// Clean expired blocks
 		for key, expiry := range m.blocks {
 			if now.After(expiry) {
 				delete(m.blocks, key)
@@ -85,7 +81,6 @@ func (m *MemoryStorage) Increment(ctx context.Context, key string, expiration ti
 	m.mutex.Lock()
 	defer m.mutex.Unlock()
 
-	// Check if key is expired
 	if expiry, exists := m.expires[key]; exists && time.Now().After(expiry) {
 		m.data[key] = 0
 	}
